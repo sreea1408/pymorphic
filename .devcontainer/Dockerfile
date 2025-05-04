@@ -1,6 +1,8 @@
 # Use the minimal Ubuntu image
 FROM ubuntu:22.04
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install prerequisites
 RUN apt-get update && apt-get install -y \
     curl \
