@@ -30,7 +30,7 @@ jobs:
 
       - name: Start the container in the background
         run: |
-          docker run -d --name $CONTAINER_NAME $IMAGE_NAME tail -f /dev/null
+          docker run -d --name $CONTAINER_NAME -v $GITHUB_WORKSPACE:/workspace -w /workspace $IMAGE_NAME tail -f /dev/null
 
       - name: Set up Python and install dependencies
         run: |
