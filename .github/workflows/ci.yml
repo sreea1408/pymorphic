@@ -1,4 +1,4 @@
-name: Python CI/CD with Docker and Pyenv
+name: CI/CD
 
 on:
   push:
