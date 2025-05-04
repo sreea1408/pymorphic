@@ -6,13 +6,12 @@ authors = [
     {name = "sreea1408",email = "108213270+sreea1408@users.noreply.github.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.11"
-dependencies = [
-]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.14"
 
 [tool.poetry]
 packages = [{include = "pymorphic", from = "src"}]
-
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
