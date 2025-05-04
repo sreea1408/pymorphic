@@ -47,8 +47,7 @@ RUN pyenv install 3.9.22 && \
     pyenv install 3.12.6 && \
     pyenv install 3.13.2
 
-# Set pyenv default to 3.9.22 (or whichever version you prefer)
-RUN pyenv global 3.9.22
+RUN pyenv global 3.11.12
 
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
