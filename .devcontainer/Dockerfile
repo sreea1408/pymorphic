@@ -33,11 +33,12 @@ RUN apt-get update && apt-get install -y \
 RUN curl https://pyenv.run | bash
 
 # Set environment variables for pyenv
-ENV PATH="/root/.pyenv/bin:${PATH}"
 ENV PYENV_ROOT="/root/.pyenv"
-RUN echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-RUN echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
-RUN echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+ENV PATH="$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH"
+
+# Initialize pyenv for non-interactive shell
+RUN eval "$(pyenv init --path)" && \
+    eval "$(pyenv init -)"
 
 # Install the latest Python versions
 RUN pyenv install 3.9.22
