@@ -41,11 +41,11 @@ RUN eval "$(pyenv init --path)" && \
     eval "$(pyenv init -)"
 
 # Install the latest Python versions
-RUN pyenv install 3.9.22
-RUN pyenv install 3.10.17
-RUN pyenv install 3.11.12
-RUN pyenv install 3.12.6
-RUN pyenv install 3.13.2
+RUN pyenv install 3.9.22 && \
+    pyenv install 3.10.17 && \
+    pyenv install 3.11.12 && \
+    pyenv install 3.12.6 && \
+    pyenv install 3.13.2
 
 # Set pyenv default to 3.9.22 (or whichever version you prefer)
 RUN pyenv global 3.9.22
