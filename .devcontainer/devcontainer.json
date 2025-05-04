@@ -1,6 +1,6 @@
 {
     "name": "pymorphic Dev Container",
-    "dockerFile": "Dockerfile",
+    "image": "sreea1408/pymorphic:0.1.1",
     "customizations": {
         "vscode": {
             "extensions": [
