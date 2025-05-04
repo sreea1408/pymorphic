@@ -9,95 +9,54 @@ on:
       - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-    
+    strategy:
+      matrix:
+        python-version: [3.9.22, 3.10.17, 3.11.12, 3.12.6, 3.13.2]
+    env:
+        CONTAINER_NAME: pymorphic-${{ matrix.python-version }}
+        IMAGE_NAME: sreea1408/pymorphic:0.1.1
     steps:
-      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v2
-        
-      # Set up Docker Buildx
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-        
-      # Build the Docker container
-      - name: Build Docker container
-        run: |
-          docker build -t python-devcontainer -f .devcontainer/Dockerfile .
 
-      # Run the container in the background
+      - name: Pull Docker image
+        run: |
+          docker pull $IMAGE_NAME
+
       - name: Start the container in the background
-        id: start_container
         run: |
-          docker run -d --name python-dev-container python-devcontainer tail -f /dev/null
+          docker run -d --name $CONTAINER_NAME $IMAGE_NAME tail -f /dev/null
 
-      # Install dependencies and set Python 3.9
-      - name: Set up Python 3.9 and install dependencies
+      - name: Set up Python and install dependencies
         run: |
-          docker exec python-dev-container bash -c "pyenv global 3.9.22 && pyenv rehash && poetry install"
+          docker exec $CONTAINER_NAME bash -c "pyenv global ${{ matrix.python-version }} && pyenv rehash && poetry install"
 
-      # Run ruff formatting for Python 3.9
-      - name: Run ruff formatting
+      - name: Run Ruff formatting
+        if: ${{ matrix.python-version == '3.9.22' }}
         run: |
-          docker exec python-dev-container bash -c "poetry run ruff check --fix ."
+          docker exec $CONTAINER_NAME bash -c "poetry run ruff format --check"
 
-      # Run ruff linting for Python 3.9
-      - name: Run ruff linting
+      - name: Run Ruff linting
+        if: ${{ matrix.python-version == '3.9.22' }}
         run: |
-          docker exec python-dev-container bash -c "poetry run ruff check ."
+          docker exec $CONTAINER_NAME bash -c "poetry run ruff check"
 
-      # Run mypy for Python 3.9
       - name: Run mypy
+        if: ${{ matrix.python-version == '3.9.22' }}
         run: |
-          docker exec python-dev-container bash -c "poetry run mypy ."
+          docker exec $CONTAINER_NAME bash -c "poetry run mypy ."
 
-      # Run tests for Python 3.9
-      - name: Run tests for Python 3.9
+      - name: Run tests
         run: |
-          docker exec python-dev-container bash -c "poetry run pytest"
+          docker exec $CONTAINER_NAME bash -c "poetry run pytest"
 
-      # Switch to Python 3.10 and install dependencies
-      - name: Switch to Python 3.10 and install dependencies
+      - name: Stop and remove the container
+        if: always()
         run: |
-          docker exec python-dev-container bash -c "pyenv global 3.10.17 && pyenv rehash && poetry install"
-
-      # Run tests for Python 3.10
-      - name: Run tests for Python 3.10
-        run: |
-          docker exec python-dev-container bash -c "poetry run pytest"
-
-      # Switch to Python 3.11 and install dependencies
-      - name: Switch to Python 3.11 and install dependencies
-        run: |
-          docker exec python-dev-container bash -c "pyenv global 3.11.12 && pyenv rehash && poetry install"
-
-      # Run tests for Python 3.11
-      - name: Run tests for Python 3.11
-        run: |
-          docker exec python-dev-container bash -c "poetry run pytest"
-
-      # Switch to Python 3.12 and install dependencies
-      - name: Switch to Python 3.12 and install dependencies
-        run: |
-          docker exec python-dev-container bash -c "pyenv global 3.12.6 && pyenv rehash && poetry install"
-
-      # Run tests for Python 3.12
-      - name: Run tests for Python 3.12
-        run: |
-          docker exec python-dev-container bash -c "poetry run pytest"
-
-      # Switch to Python 3.13 and install dependencies
-      - name: Switch to Python 3.13 and install dependencies
-        run: |
-          docker exec python-dev-container bash -c "pyenv global 3.13.2 && pyenv rehash && poetry install"
-
-      # Run tests for Python 3.13
-      - name: Run tests for Python 3.13
-        run: |
-          docker exec python-dev-container bash -c "poetry run pytest"
-
-      # Stop the container after all steps
-      - name: Stop the container
-        run: |
-          docker stop python-dev-container
+          docker stop $CONTAINER_NAME || true
+          docker rm $CONTAINER_NAME || true
