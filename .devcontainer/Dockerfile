@@ -49,6 +49,8 @@ RUN pyenv install 3.9.22 && \
 
 RUN pyenv global 3.11.12
 
+ENV HOME="/root"
+
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
