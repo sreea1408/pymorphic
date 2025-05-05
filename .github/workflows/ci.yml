@@ -39,17 +39,17 @@ jobs:
       - name: Run Ruff formatting
         if: ${{ matrix.python-version == '3.9.22' }}
         run: |
-          docker exec $CONTAINER_NAME bash -c "poetry run ruff format --check"
+          docker exec $CONTAINER_NAME bash -c "ruff format --check"
 
       - name: Run Ruff linting
         if: ${{ matrix.python-version == '3.9.22' }}
         run: |
-          docker exec $CONTAINER_NAME bash -c "poetry run ruff check"
+          docker exec $CONTAINER_NAME bash -c "ruff check"
 
       - name: Run mypy
         if: ${{ matrix.python-version == '3.9.22' }}
         run: |
-          docker exec $CONTAINER_NAME bash -c "poetry run mypy ."
+          docker exec $CONTAINER_NAME bash -c "mypy ."
 
       - name: Run tests
         run: |
