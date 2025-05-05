@@ -49,6 +49,9 @@ RUN pyenv install 3.9.22 && \
 
 RUN pyenv global 3.11.12
 
+# Install dev dependencies
+RUN pip install ruff==0.11.8 mypy==1.15.0
+
 ENV HOME="/root"
 
 # Install Poetry
