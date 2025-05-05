@@ -16,7 +16,7 @@ jobs:
         python-version: [3.9.22, 3.10.17, 3.11.12, 3.12.6, 3.13.2]
     env:
         CONTAINER_NAME: pymorphic-${{ matrix.python-version }}
-        IMAGE_NAME: sreea1408/pymorphic:0.1.1
+        IMAGE_NAME: sreea1408/pymorphic:0.1.2
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
