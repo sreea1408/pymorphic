@@ -1,0 +1,51 @@
+target-version = "py39"
+line-length = 88
+indent-width = 4
+
+[lint]
+select = [
+  "F",    # Pyflakes
+  "E",    # pycodestyle (errors)
+  "W",    # pycodestyle (warnings)
+  "I",    # isort
+  "N",    # pep8-naming
+  "UP",   # pyupgrade
+  "B",    # bugbear
+  "A",    # builtins shadowing
+  "Q",    # flake8-quotes
+  "T20",  # flake8-print
+  "PT",   # flake8-pytest-style (pytest best practices)
+  "C90",  # mccabe complexity
+  "RUF"   # Ruff-specific
+]
+
+ignore = [
+  "E501",   # Line too long (handled by formatter)
+  "B008",   # Function call as default argument
+]
+
+fixable = ["ALL"]
+unfixable = []
+
+exclude = [
+  ".git",
+  ".venv",
+  "__pycache__",
+  "build",
+  "dist",
+  ".mypy_cache",
+  ".ruff_cache"
+]
+
+[lint.isort]
+combine-as-imports = true
+force-single-line = false
+known-first-party = ["pymorphic"]
+
+[lint.flake8-quotes]
+inline-quotes = "double"
+multiline-quotes = "double"
+avoid-escape = true
+
+[lint.mccabe]
+max-complexity = 8
