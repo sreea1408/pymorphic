@@ -1,7 +1,7 @@
 # Use the minimal Ubuntu image
 FROM ubuntu:22.04
 
-ENV IMAGE_VERSION="0.1.1"
+ENV IMAGE_VERSION="0.1.2"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
