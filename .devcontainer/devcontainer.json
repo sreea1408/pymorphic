@@ -1,13 +1,43 @@
 {
     "name": "pymorphic Dev Container",
-    "image": "sreea1408/pymorphic:0.1.1",
+    "image": "sreea1408/pymorphic:0.1.2",
     "customizations": {
         "vscode": {
             "extensions": [
                 "ms-python.python",
                 "ms-python.debugpy",
-                "ms-python.vscode-pylance"
-            ]
+                "ms-pyright.pyright",
+                "charliermarsh.ruff",
+                "matangover.mypy"
+            ],
+            "settings": {
+                "ruff.enable": true,
+                "ruff.configFilePath": "${workspaceFolder}/ruff.toml",
+                "ruff.path": [
+                    "ruff"
+                ],
+                "ruff.format": true,
+                "ruff.organizeImports": true,
+                "editor.formatOnSave": true,
+                "mypy-type-checker.enabled": true,
+                "mypy-type-checker.useDaemon": true,
+                "mypy-type-checker.dmypyExecutable": "dmypy",
+                "mypy-type-checker.mypyArgs": [
+                    "--config-file",
+                    "${workspaceFolder}/pyproject.toml"
+                ],
+                "python.languageServer": "None", // Disable Pylance
+                "python.analysis.enabled": false, // Disable Pylance's analysis
+                "python.analysis.diagnosticMode": "openFilesOnly", // Only check open files for diagnostics
+                "python.analysis.typeCheckingMode": "off", // Turn off type checking in Pylance
+                "python.analysis.diagnosticSeverityOverrides": {
+                    "reportUnusedImport": "none", // Disable unused import warnings
+                    "reportMissingImports": "none" // Disable missing import warnings
+                },
+                "pyright.disableLanguageServices": false, // Keep Pyright enabled for IntelliSense
+                "pyright.typeCheckingMode": "off", // Disable Pyright's type checking
+                "pyright.useLibraryCodeForTypes": true // Use library code for types
+            }
         }
     }
 }
